@@ -1,0 +1,8 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=3124
+
+This script integrates the sbt (simple-biuld-tool) with Vim. It can be used to develop Java or Scala applications conviniently.
+Integrates with vim-addon-actions. You can setup a mapping to run sbt and feed compilation results into quickfix window using both: a background python job or a background sh job.
+The pyhton job is using sbt interactive mode so compilation should be fastest.
+For large projects you still want to consiider using an IDE..
+
+http://github.com/romanroe/codefellow (<- Don't miss this. Its going to provide scala code completion)

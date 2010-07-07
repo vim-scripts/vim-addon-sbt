@@ -1,0 +1,76 @@
+Note: alternatives:
+
+installation
+=============
+This plugin depends on other plugins. See ../vim-addon-sbt-addon-info.txt
+That's why I recommend using http://github.com/MarcWeber/vim-addon-manager to
+install this plugin.
+
+usage (running sbt)
+===================
+See documentation of vim-addon-actions (http://github.com/MarcWeber/vim-addon-actions)
+Eg <s-F2> -> select one of both sbt items, pass the command.
+Use <F2> to run/compile. Or use :ActionOnBufWrite to run a sbt command.
+
+Now there is also a :SBT command. Eg try :SBT help or :SBT jetty-run
+
+:SBTAddFeature sbteclipsify sbtidea codefellow ...
+================================================
+creates plugins and project description files unless they exist adding those
+features (see $RUNTIMEPATH/sbt-extensions/*.txt)
+Implementation details see SbtAddFeature
+
+:ScalaExceptionTraceToQuickFix
+=============================
+define list of source directories and make vim read a stack trace into quickfix.
+You can use ignore patterns
+
+
+:SBTOpenBuildAndPluginfiles
+============================
+open all project/{plugins,build}/*.scala files
+
+tips:
+=====
+
+checkout http://github.com/romanroe/codefellow
+I'd like to merge this plugin with that. I contacted the author
+
+- tlib
+
+  One of the dependency is tlib. You may want to disable some of those plugin by putting
+
+  something like
+    let loaded_my_tinymode=1
+    let loaded_cmdlinehelp=1
+    let loaded_concordance=1
+    let loaded_evalselection=1
+  into your .vimrc
+
+
+- tags
+
+  checkout scala source and ctag this directory: src/library/scala
+
+  The you can jump to TupleX etc easily
+
+  Put this into your ~/.ctags file:
+
+    --langdef=scala
+    --langmap=scala:.scala
+    --regex-scala=/^[ \t]*class[ \t]+([a-zA-Z0-9_]+)/\1/c,classes/
+    --regex-scala=/^[ \t]*trait[ \t]+([a-zA-Z0-9_]+)/\1/t,traits/
+    --regex-scala=/^[ \t]*type[ \t]+([a-zA-Z0-9_]+)/\1/T,types/
+    --regex-scala=/^[ \t]*def[ \t]+([a-zA-Z0-9_\?]+)/\1/m,methods/
+    --regex-scala=/^[ \t]*val[ \t]+([a-zA-Z0-9_]+)/\1/C,constants/
+    --regex-scala=/^[ \t]*var[ \t]+([a-zA-Z0-9_]+)/\1/l,local variables/
+    --regex-scala=/^[ \t]*package[ \t]+([a-zA-Z0-9_.]+)/\1/p,packages/
+    --regex-scala=/^[ \t]*case class[ \t]+([a-zA-Z0-9_]+)/\1/c,case classes/
+    --regex-scala=/^[ \t]*final case class[ \t]+([a-zA-Z0-9_]+)/\1/c,case classes/
+    --regex-scala=/^[ \t]*object[ \t]+([a-zA-Z0-9_]+)/\1/o,objects/
+    --regex-scala=/^[ \t]*private def[ \t]+([a-zA-Z0-9_]+)/\1/pd,defs/
+
+- trouble? Vim hangs?
+  Probably the pyhton script is waiting for output of the sbt command. This happens
+  when sbt starts a prompt I didn't see yet. Run sbt from console once to see whats happening
+  or switch on debugging or run the .py script from console (after defining env var SBT_JAR)
